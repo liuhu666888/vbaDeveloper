@@ -1,7 +1,7 @@
 Attribute VB_Name = "Menu"
 Option Explicit
 
-Private Const MENU_TITLE = "VbaDeveloper"
+Private Const MENU_TITLE = "VbaDev"
 
 Public Sub createMenu()
     Dim rootMenu As CommandBarPopup
@@ -33,6 +33,7 @@ Public Sub createMenu()
         Set project = vProject
         Dim projectName As String
         projectName = project.name
+        If projectName = "vbaDeveloper" Then GoTo nextProject
         Dim caption As String
         caption = projectName & " (" & Dir(project.fileName) & ")" '<- this can throw error
         Dim exCommand As String
