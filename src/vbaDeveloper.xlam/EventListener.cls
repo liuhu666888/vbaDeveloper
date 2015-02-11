@@ -7,10 +7,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'This class receives and acts upon events from the excel application.
-
 Option Explicit
-
+'This class receives and acts upon events from the excel application.
 Private WithEvents App As Application
 Attribute App.VB_VarHelpID = -1
 
@@ -24,9 +22,7 @@ Private Sub App_WorkbookAfterSave(ByVal wb As Workbook, ByVal success As Boolean
 
     'Export all the modules for this work book if save was successful
     If success Then
-        Formatter.formatProject wb.VBProject
         Build.exportVbaCode wb.VBProject
-        NamedRanges.exportNamedRanges wb
         MsgBox "Finished saving workbook: " & wb.name & " . Code is exported."
     Else
         MsgBox "Saving workbook: " & wb.name & " was not successful. Code is not exported."
@@ -43,8 +39,15 @@ Private Sub App_WorkbookBeforeSave(ByVal wb As Workbook, ByVal SaveAsUI As Boole
 End Sub
 
 Private Sub App_WorkbookOpen(ByVal wb As Workbook)
+    Dim proj_name As String
+    proj_name = "vbaDeveloper"
     On Error GoTo App_WorkbookOpen_Error
-
+    
+    If wb.VBProject.name = proj_name Then
+      Debug.Print "skipping import code for vbaDeveloper project"
+      Exit Sub
+    End If
+    
     'Import all the modules for this workbook
     Dim importNow As Integer
     importNow = MsgBox("Import the code for " & wb.name & " now?", vbYesNo, "EventListener Workbook open event")
