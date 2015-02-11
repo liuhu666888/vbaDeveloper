@@ -1,18 +1,18 @@
 Attribute VB_Name = "Menu"
 Option Explicit
 
-Private Const MENU_TITLE = "VbaDev"
+Private Const MENU_TITLE = "vbaDeveloper"
 
 Public Sub createMenu()
     Dim rootMenu As CommandBarPopup
-
+    
     'Add the top-level menu to the ribbon Add-ins section
     Set rootMenu = Application.CommandBars(1).Controls.Add(Type:=msoControlPopup, _
     Before:=10, _
     Temporary:=True)
     rootMenu.caption = MENU_TITLE
-
-
+    
+    
     Dim exSubMenu As CommandBarPopup
     Dim imSubMenu As CommandBarPopup
     Dim formatSubMenu As CommandBarPopup
@@ -33,7 +33,10 @@ Public Sub createMenu()
         Set project = vProject
         Dim projectName As String
         projectName = project.name
-        If projectName = "vbaDeveloper" Then GoTo nextProject
+        If projectName = "vbaDeveloper" Then
+          Debug.Print "skipping create menu for vbaDeveloper project"
+          GoTo nextProject
+        End If
         Dim caption As String
         caption = projectName & " (" & Dir(project.fileName) & ")" '<- this can throw error
         Dim exCommand As String
