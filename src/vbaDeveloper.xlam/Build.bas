@@ -28,7 +28,7 @@ Public vbaProjectToImport As VBProject
 
 Public Sub testImport()
     Dim proj_name As String
-    proj_name = "VbaDeveloper"
+    proj_name = "vbaDeveloper"
 
     Dim vbaProject As Object
     Set vbaProject = Application.VBE.VBProjects(proj_name)
@@ -38,7 +38,7 @@ End Sub
 
 Public Sub testExport()
     Dim proj_name As String
-    proj_name = "VbaDeveloper"
+    proj_name = "vbaDeveloper"
 
     Dim vbaProject As Object
     Set vbaProject = Application.VBE.VBProjects(proj_name)
@@ -218,8 +218,7 @@ Private Sub checkHowToImport(file As Object)
     fileName = file.name
     Dim componentName As String
     componentName = left(fileName, InStr(fileName, ".") - 1)
-    If componentName = "Build" Then
-        '"don't remove or import ourself
+    If componentName = "Build" Then '"don't remove or import ourself
         Exit Sub
     End If
 
@@ -264,6 +263,7 @@ Public Sub importComponents()
     End If
     Dim componentName As String
     Dim vComponentName As Variant
+    ' Creating and import components
     For Each vComponentName In componentsToImport.Keys
         componentName = vComponentName
         importComponent vbaProjectToImport, componentsToImport(componentName)
@@ -357,4 +357,3 @@ Public Function addSheetToWorkbook(sheetName As String, workbookFilePath As Stri
         addSheetToWorkbook = ""
     End If
 End Function
-
